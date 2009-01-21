@@ -737,8 +737,8 @@ module Sinatra
     end
 
     configure :development do
-      get '/__sinatra__/:image.png' do
-        filename = File.dirname(__FILE__) + "/images/#{params[:image]}.png"
+      get '/__sinatra__/:image.:ext' do
+        filename = File.dirname(__FILE__) + "/images/#{params[:image]}.#{params[:ext]}"
         content_type :png
         send_file filename
       end
@@ -750,7 +750,8 @@ module Sinatra
         <head>
           <style type="text/css">
           body { text-align:center;font-family:helvetica,arial;font-size:22px;
-            color:#888;margin:20px}
+            color:#888;margin:20px;background-image:url(/__sinatra__/legend.gif);
+            background-repeat:no-repeat;background-position:center top;}
           #c {margin:0 auto;width:500px;text-align:left}
           </style>
         </head>
