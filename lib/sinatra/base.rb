@@ -6,6 +6,11 @@ require 'rack/builder'
 module Sinatra
   VERSION = '0.9.0.2'
 
+  def self.new(app, &blk)
+    Application.instance_eval(&blk)
+    Application.new(app)
+  end
+
   class Request < Rack::Request
     def user_agent
       @env['HTTP_USER_AGENT']
@@ -751,7 +756,7 @@ module Sinatra
           <style type="text/css">
           body { text-align:center;font-family:helvetica,arial;font-size:22px;
             color:#888;margin:20px;background-image:url(/__sinatra__/legend.gif);
-            background-repeat:no-repeat;background-position:center top;}
+            background-repeat:no-repeat;background-position:left top;}
           #c {margin:0 auto;width:500px;text-align:left}
           </style>
         </head>
