@@ -329,7 +329,7 @@ module Sinatra
 
   private
     def dispatch!
-      @params = @request.params
+      @params = original_params = nested_params(@request.params)
 
       self.class.filters.each do |block|
         res = catch(:halt) { instance_eval(&block) ; :continue }
@@ -338,7 +338,6 @@ module Sinatra
 
       if routes = self.class.routes[@request.request_method]
         path = @request.path_info
-        original_params = nested_params(@request.params)
 
         routes.each do |pattern, keys, conditions, method_name|
           if match = pattern.match(path)
