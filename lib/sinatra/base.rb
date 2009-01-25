@@ -329,6 +329,8 @@ module Sinatra
 
   private
     def dispatch!
+      @params = @request.params
+
       self.class.filters.each do |block|
         res = catch(:halt) { instance_eval(&block) ; :continue }
         return unless res == :continue
