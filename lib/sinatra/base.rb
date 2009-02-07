@@ -525,6 +525,10 @@ module Sinatra
         :middleware, :errors
 
     public
+      def to_proc
+        Proc.new { run self }
+      end
+
       def set(option, value=self)
         if value.kind_of?(Proc)
           metadef(option, &value)
@@ -929,6 +933,7 @@ module Sinatra
       Delegator.delegate *added_methods
       super(*extensions, &block)
     end
+
   end
 
   # The top-level Application. All DSL methods executed on main are delegated
@@ -998,6 +1003,7 @@ class Rack::Builder
   def Sinatra(file, base=Sinatra::Default)
     Sinatra.new(base) {
       expanded = File.expand_path(file)
-      self.class_eval(File.read(expanded), expanded) }
+      self.class_eval(File.read(expanded), expanded)
+    }
   end
 end
