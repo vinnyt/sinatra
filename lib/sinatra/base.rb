@@ -768,6 +768,7 @@ module Sinatra
       end
 
       def reload!
+        sinatra_warn("reloading is depricated; see shotgun if you need reloading (http://github.com/rtomayko/shotgun)")
         @reloading = true
         superclass.send :reset!, self
         $LOADED_FEATURES.delete("sinatra.rb")
